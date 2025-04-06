@@ -244,68 +244,6 @@
         </form>
     </div>
 
-    <script>
-        document.getElementById('formSolicitudProcedimiento').addEventListener('submit', function(e) {
-            e.preventDefault();
-            
-            // Validar fechas
-            const fechaConsulta = document.getElementById('fechaConsulta').value;
-            const hoy = new Date().toISOString().split('T')[0];
-            
-            if (fechaConsulta > hoy) {
-                alert('La fecha de consulta no puede ser futura');
-                return;
-            }
-            
-            // Obtener todos los valores
-            const datosSolicitud = {
-                paciente: {
-                    nombre: document.getElementById('nombrePaciente').value,
-                    fechaConsulta: fechaConsulta
-                },
-                medico: {
-                    nombre: document.getElementById('nombreMedico').value,
-                    cedula: document.getElementById('cedulaMedico').value
-                },
-                diagnostico: document.getElementById('diagnostico').value,
-                procedimiento: {
-                    nombre: document.getElementById('procedimiento').value,
-                    justificacion: document.getElementById('justificacion').value
-                },
-                disponibilidad: {
-                    fechas: [
-                        document.getElementById('fechaOpcion1').value,
-                        document.getElementById('fechaOpcion2').value,
-                        document.getElementById('fechaOpcion3').value
-                    ].filter(fecha => fecha !== ""),
-                    horario: document.getElementById('horarioPreferente').value
-                },
-                fechaSolicitud: new Date().toLocaleString()
-            };
-
-            console.log("Datos de la solicitud:", datosSolicitud);
-            
-            // Simular envío al servidor
-            setTimeout(() => {
-                alert('Solicitud enviada correctamente');
-                document.getElementById('formSolicitudProcedimiento').reset();
-            }, 1000);
-        });
-
-        // Mejorar experiencia de fecha
-        document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date().toISOString().split('T')[0];
-            document.getElementById('fechaConsulta').max = today;
-            
-            // Establecer fechas mínimas para las opciones de disponibilidad
-            const tomorrow = new Date();
-            tomorrow.setDate(tomorrow.getDate() + 1);
-            const minDate = tomorrow.toISOString().split('T')[0];
-            
-            document.querySelectorAll('.date-options input[type="date"]').forEach(input => {
-                input.min = minDate;
-            });
-        });
-    </script>
+<script src="app.js"></script>
 </body>
 </html>
