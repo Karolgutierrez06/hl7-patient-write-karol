@@ -1,32 +1,42 @@
-document.getElementById('serviceRequestForm').addEventListener('submit', function(event) {
-    event.preventDefault();
-  
-    // Obtener los valores del formulario
-    const name = document.getElementById('name').value;
-    const description = document.getElementById('description').value;
-  
-    // Construir el objeto con los datos de la solicitud de servicio
-    const serviceRequestData = { name, description };
-    console.log(serviceRequestData)
-  
-    // Enviar la solicitud al backend (sin trailing slash)
-    fetch('https://hl7-fhir-ehr-karol-1.onrender.com/service-request/', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(serviceRequestData)
-    })
-    .then(response => {
-      if (!response.ok) {
-        throw new Error('Error en la solicitud: ' + response.statusText);
+
+
+  document.getElementById('serviceRequestForm').addEventListener('submit', function(e) {
+    e.preventDefault();
+    
+    // Obtener todos los valores
+    const datosSolicitud = {
+      paciente: {
+        nombre: document.getElementById('nombrePaciente').value,
+        fechaConsulta: document.getElementById('fechaConsulta').value
+      },
+      medico: {
+        nombre: document.getElementById('nombreMedico').value,
+        cedula: document.getElementById('cedulaMedico').value
+      },
+      diagnostico: document.getElementById('diagnostico').value,
+      procedimiento: {
+        nombre: document.getElementById('procedimiento').value,
+        justificacion: document.getElementById('justificacion').value
+      },
+      disponibilidad: {
+        fechas: [
+          document.getElementById('fechaOpcion1').value,
+          document.getElementById('fechaOpcion2').value,
+          document.getElementById('fechaOpcion3').value
+        ].filter(fecha => fecha !== ""), // Filtra fechas no seleccionadas
+        horario: document.getElementById('horarioPreferente').value
       }
-      return response.json();
-    })
-    .then(data => {
-      console.log('Success:', data);
-      alert('Service Request creado exitosamente! ID: ' + data._id);
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Hubo un error en la solicitud: ' + error.message);
-    });
+    };
+  
+    console.log("Datos de la solicitud:", datosSolicitud);
+    
+    // Aquí iría el código para enviar al servidor
+    // Ejemplo:
+    // fetch('/api/solicitudes', {
+    //   method: 'POST',
+    //   headers: { 'Content-Type': 'application/json' },
+    //   body: JSON.stringify(datosSolicitud)
+    // });
+    
+    alert('Solicitud enviada correctamente');
   });
